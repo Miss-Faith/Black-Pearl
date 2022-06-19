@@ -18,7 +18,16 @@ def signup(request):
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
             User.objects.create_user(username=username, email=email, password=password)
-            return redirect('login')
+            return redirect('index')
     else:
         form = SignupForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+def hoods(request):
+    all_hoods = NeighbourHood.objects.all()
+    all_hoods = all_hoods[::-1]
+    params = {
+        'all_hoods': all_hoods,
+    }
+    return render(request, 'neighbourhood.html', params)
+
