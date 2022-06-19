@@ -1,16 +1,22 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save, post_delete
+from django.conf import settings
+from django.urls import reverse
+from django.dispatch import receiver
+import os
+from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 class NeighbourHood(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=60)
-    occupants = models.IntegerField(default=0, null=True, blank=True)
-    admin = models.ForeignKey("Admin", on_delete=models.CASCADE, related_name='admin')
+    admin = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name='hood')
     health = PhoneNumberField(null = False, blank = False)
     police = PhoneNumberField(null = False, blank = False)
     
     def __str__(self):
-        return f'{self.name} name'
+        return f'{self.name} neighbourhood'
 
     def create_neighborhood(self):
         self.save()
@@ -26,12 +32,11 @@ class NeighbourHood(models.Model):
     def update_neighbourhood(cls, name, location):
         update = cls.objects.filter(id = id).update(name = name, location = location)
 
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     first_name = models.CharField(max_length=80, blank=True)
     last_name = models.CharField(max_length=80, blank=True)
-    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.SET_NULL, null=True, related_name='neighbourhood', blank=True)
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.SET_NULL, null=True, related_name='occupants', blank=True)
 
     def __str__(self):
         return f'{self.user.username} profile'
@@ -50,11 +55,11 @@ class Business(models.Model):
     name = models.CharField(max_length=120)
     email = models.EmailField(max_length=254)
     description = models.TextField(blank=True)
-    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='neighbourhood')
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='user')
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='business')
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='owner')
 
     def __str__(self):
-        return f'{self.name} name'
+        return f'{self.name} Business'
 
     def create_business(self):
         self.save()
@@ -75,5 +80,8 @@ class Post(models.Model):
     title = models.CharField(max_length=120, null=True)
     post = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='user')
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='post')
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='neighbourhood')
+
+    def __str__(self):
+        return str(self.id)
