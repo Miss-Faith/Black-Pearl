@@ -53,7 +53,7 @@ class SignupForm(forms.ModelForm):
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ('user', 'neighbourhood')
+        exclude = ('user')
 
 
 class NeighbourHoodForm(forms.ModelForm):
