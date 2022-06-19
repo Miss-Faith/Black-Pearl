@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 {% block content %}
 <div class="container" >
-    <div class="text-white text-center" style="margin-top:15%">
+    <div class="text-center" style="margin-top:10%">
         <h1>Welcome to the Neighbourhood</h1>
         <h5 style="margin-top:6%">Stay updated with the latest in your neighbourhood</h5>
+        <br>
         <button class="form-button text-center btn btn-info btn-md" data-toggle="modal" data-target=".bd-example-modal-xl">Log In</butoon>
     </div>
 </div>
 
-
-
 <div class="container-fluid" style="margin-top:3%;">
-  <h2 class="text-center">Projects</h2>
-  {% if user.is_authenticated %}
   <div class="modal fade bd-example-modal-xl" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -29,11 +28,12 @@
             {{ form|crispy }}
             <button type="submit" name="action" class="btn btn-sm btn-info">Log In</button>
           </form>
+          <h4>Don't have an account?</h4>
+          <a class="btn btn-sm btn-info text-center" href="{% url 'signup' %}">Sign Up</a>
         </div>
       </div>
     </div>
   </div>
-  {% endif %}
-
 </div>
+
 {% endblock %}
