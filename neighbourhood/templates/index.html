@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container" >
+    <div class="text-white text-center" style="margin-top:15%">
+        <h1>Welcome to the Neighbourhood</h1>
+        <h5 style="margin-top:6%">Stay updated with the latest in your neighbourhood</h5>
+        <a href="{% url 'login' %}" class="btn btn-sm btn-info mt-4">Log in</a>
+    </div>
+
+</div>
+{% endblock %}
