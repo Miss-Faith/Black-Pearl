@@ -73,8 +73,20 @@ class Business(models.Model):
         update = cls.objects.filter(id = id).update(name = name, location = location, description = description)
 
     @classmethod
-    def find_business(cls, name):
-        return cls.objects.filter(name__icontains=name).all()
+    def get_specific_business(cls,id):
+        business = cls.objects.filter(id=id)
+        return business
+
+
+    @classmethod
+    def get_businesses(cls):
+        business = cls.objects.all()
+        return business
+
+    @classmethod
+    def get_business_by_estate(cls,neighbourhood_id):
+        messages = cls.objects.all().filter(estate=neighbourhood_id)
+        return messages
 
 
 class Post(models.Model):
@@ -90,7 +102,7 @@ class Post(models.Model):
 
 class Join_hood(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    estate=models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='joinhood')
+    estate=models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='estate')
 
     def __str__(self):
         return self.user.username

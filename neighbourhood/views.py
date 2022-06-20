@@ -6,11 +6,24 @@ from .forms import *
 from django.template import loader
 
 # Create your views here.
-@login_required(login_url='/accounts/login/')
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            User.objects.create_user(username=username, email=email, password=password)
+            return redirect('login')
+    else:
+        form = SignupForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
+@login_required()
 def index(request):
-    current_user =request.user
-    hoods=Neighbourhood.get_neighbourhoods
-    est=Follow.objects.get(user = request.user)
+    user =request.user
+    hoods=NeighbourHood.objects.all()
+    # est=Join_hood.objects.get(user = user)
     business=Business.get_business_by_neighbourhood(est.neighbourhood)
     post=Post.objects.all()
     return render(request, 'index.html',{"posts":post,"neighbourhoods":est,"user":current_user,"hoods":hoods,"business":business})

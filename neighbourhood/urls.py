@@ -17,5 +17,5 @@ urlpatterns = [
     path('new/business/',create_business, name='newBusiness'),
     path('business/',business_details, name='business'),
     path('post/', new_post, name='post'),
-    path('search/', search_business, name='search'),
+    path('search/', search_results, name='search'),
 ]
