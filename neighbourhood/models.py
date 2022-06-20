@@ -11,6 +11,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class NeighbourHood(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=60)
+    accounts=models.PositiveIntegerField(default=0)
     admin = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name='hood')
     health = PhoneNumberField(null = False, blank = False)
     police = PhoneNumberField(null = False, blank = False)
@@ -29,8 +30,8 @@ class NeighbourHood(models.Model):
         return cls.objects.filter(id=id)
 
     @classmethod
-    def update_neighbourhood(cls, name, location):
-        update = cls.objects.filter(id = id).update(name = name, location = location)
+    def update_neighbourhood(cls, name, location, occupants):
+        update = cls.objects.filter(id = id).update(name = name, location = location, occupants=occupants)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
@@ -85,3 +86,16 @@ class Post(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class Join_hood(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    estate=models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='joinhood')
+
+    def __str__(self):
+        return self.user.username
+
+    @classmethod
+    def get_following(cls,user_id):
+        following =  Follow.objects.filter(user=user_id).all()
+        return following
