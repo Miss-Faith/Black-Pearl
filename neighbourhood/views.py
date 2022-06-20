@@ -28,10 +28,11 @@ def index(request):
     return render(request, 'index.html',{"posts":post,"neighbourhoods":user.profile.neighbourhood,"user":user,"hoods":hoods,"business":business})
 
 @login_required(login_url='/accounts/login/')
-def profile(request,profile_id):
+def profile(request, profile_id):
     '''
     Method that fetches a users profile page
     '''
+
     user=User.objects.get(pk=profile_id)
     title = User.objects.get(pk = profile_id).username
     profile = Profile.objects.filter(user = profile_id)

@@ -61,7 +61,7 @@
     <div id="login-submit" class="d-flex align-items-center w-25">
       {% if user.is_authenticated %}
       <div class="f-12 font-weight-bold mx-2 px-1  ml-auto text-white-50 d-flex"></a>
-        <a class="nav-link txt-lightgrey" href="{%url 'profile' user.id%}">
+        <a class="nav-link txt-lightgrey" href="{%url 'profile' user.profile.id%}">
           <span class="" style="text-transform:capitalize;font-size: 15px">Profile</span>
         </a>
             

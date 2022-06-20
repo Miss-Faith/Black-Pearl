@@ -1,21 +1,29 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="container ">
+    <br><br><br>
     <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6 mt-4 bg-white prof mr-2 ml-2">
-            <img class="rounded-circle account-img d-block mx-auto" src="{{ user.profile.profile_picture.url }}"height="125px" width="125px">
-            <h5 class="text-center mt-3">{{user.username}}</h5>
-            <p class="text-center"> {{user.email}}</p>
+        <div class="col-6 text-center" style="margin-left: 30px;">
+            <img class="rounded-circle d-block mx-auto" src="{% static '/images/ricardo.jpg' %}" height="125px" width="125px">
+            <h5 class="mt-3">{{user.username}}</h5>
+            <h4>{{user.profile.first_name}} {{user.profile.last_name}}</h4>
+            <p> {{user.email}}</p>
             {% if request.user.profile.neighbourhood %}
-            <p class="text-center">My Hood <a class="btn btn-sm btn-info" href="{% url 'single_hood' user.profile.neighbourhood.id %}">{{ user.profile.neighbourhood.name }}</a>
+            <p class="text-center">Neighbourhood Details
+                <br> <a class="btn btn-sm btn-info" href="">{{ user.profile.neighbourhood.name }}</a>
             </p>
             {% endif %}
         </div>
-        <div class="col-md-3"></div>
+        
+        <div class="col-4">
+            {%if user.profile.user.id == user.id%}
+            <br><br><br><br><br><br>
+             <a class="btn btn-sm btn-info" href="{% url 'updateProfile' %}"> Update Profile</a>        
+            {% endif %}   
+        </div>
     </div>
-
-
+    <br>
 </div>
+   	
 {% endblock %}

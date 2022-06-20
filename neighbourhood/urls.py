@@ -7,7 +7,7 @@ urlpatterns = [
     path('signup/', signup, name='signup'),
     path('',index,name='index'),
     path('account/', include('django.contrib.auth.urls')),
-    path('profile/<prof_id>',profile,name = 'profile'),
+    path('profile/<profile_id>',profile,name = 'profile'),
     path('updateProfile',updateProfile,name = 'updateProfile'),
     path('new/hood/',create_neighbourhood, name='newHood'),
     path('all/hoods/',neighbourhoods, name='allHoods'),
