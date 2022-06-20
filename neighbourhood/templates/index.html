@@ -1,39 +1,33 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load crispy_forms_tags %}
+<div class="container">
+  <br><br>
+  <section class="col-md-8 col-sm-12">
+      <h3 style="text-align:center;font-size: 28px">Posts</h3>
+      <hr>
+      {%if posts %} 
+      {% for post in posts %}
+      <p>
+          <span style="color:rgb(5, 5, 54)"> {{post.user}}</span> {{post.message}}
+          
+      </p>
+      {% endfor %}
+       {% else %}
+      <p style="text-align:center">No activity Yet</p>
+      {% endif %}
+  </section>
 
-{% block content %}
-<div class="container" >
-    <div class="text-center" style="margin-top:10%">
-        <h1>Welcome to the Neighbourhood</h1>
-        <h5 style="margin-top:6%">Stay updated with the latest in your neighbourhood</h5>
-        <br>
-        <button class="form-button text-center btn btn-info btn-md" data-toggle="modal" data-target=".bd-example-modal-xl">Log In</butoon>
-    </div>
-</div>
 
-<div class="container-fluid" style="margin-top:3%;">
-  <div class="modal fade bd-example-modal-xl" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Log in</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form action="" method="post" enctype="multipart/form-data" role="form">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" name="action" class="btn btn-sm btn-info">Log In</button>
-          </form>
-          <h4>Don't have an account?</h4>
-          <a class="btn btn-sm btn-info text-center" href="{% url 'signup' %}">Sign Up</a>
-        </div>
-      </div>
-    </div>
+  <section class="col-md-4 col-sm-12">
+      <h4 style="text-align:center;font-size: 28px"> Businesses in {{estates.estate}}</h4>
+      {% if business %} 
+      {% for biz in business %}
+  <div class="container-1">>
+      <a href="{% url 'business' biz.id %}">
+          <p>{{biz.project}}</p>
+      </a>
   </div>
-</div>
+      {% endfor %} {% else %}
+      <p>No Business Posted Yet</p>
+      {% endif%}
+  </section>
 
-{% endblock %}
+</div>

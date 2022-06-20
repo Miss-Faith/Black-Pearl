@@ -66,7 +66,7 @@
         </a>
             
       </div>
-      <a class="f-12 font-weight-bold mx-2 px-1 ml-auto nav-link txt-lightgrey" href="{url 'logout'}" style="text-transform:capitalize;font-size: 15px">logout</a>
+      <a class="ml-auto nav-link" href="{% url 'logout' %}" style="text-transform:capitalize;font-size: 15px">logout</a>
 
       {% else %}
       <a href="{% url 'login' %}" class=" txt-lightgrey ">LogIn</a>
