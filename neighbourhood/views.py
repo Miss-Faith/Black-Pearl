@@ -41,21 +41,21 @@ def profile(request, profile_id):
 @login_required(login_url='/accounts/login/')
 def updateProfile(request):
 
-    current_user=request.user
+    user=request.user
     if request.method =='POST':
-        if Profile.objects.filter(user_id=current_user).exists():
-            form = UpdateProfile(request.POST,request.FILES,instance=Profile.objects.get(user_id = current_user))
+        if Profile.objects.filter(user_id=user).exists():
+            form = UpdateProfile(request.POST,request.FILES,instance=Profile.objects.get(user_id = user))
         else:
             form=UpdateProfile(request.POST,request.FILES)
         if form.is_valid():
           profile=form.save(commit=False)
-          profile.user=current_user
+          profile.user=user
           profile.save()
-        return redirect('profile',current_user.id)
+        return redirect('profile',user.id)
     else:
 
-        if Profile.objects.filter(user_id = current_user).exists():
-           form=UpdateProfile(instance =Profile.objects.get(user_id=current_user))
+        if Profile.objects.filter(user_id = user).exists():
+           form=UpdateProfile(instance =Profile.objects.get(user_id=user))
         else:
             form=UpdateProfile()
 
@@ -66,14 +66,14 @@ def neighbourhoods(request):
     hoods=NeighbourHood.objects.all()
     return render (request,'neighbourhood.html',{"user":user,"hoods":hoods})
     
-@login_required(login_url='/accounts/login')
+@login_required()
 def create_neighbourhood(request):
 
     if request.method=='post':
         form=NeighbourhoodForm(request.POST,request.files)
         if form.is_valid:
             neighbour=form.save(commit=False)
-            neighbour.user=current_user
+            neighbour.user=user
             neigghbour.save()
             return redirect(index)
 
@@ -81,27 +81,41 @@ def create_neighbourhood(request):
             form=NeighbourhoodForm()
         return render(request,'neighform.html',{"form":form})
 
-@login_required(login_url='/accounts/login')
+@login_required()
 def neighbourhood_details(request,neighbour_id):
-    if len(Join_hood.objects.all().filter(user=request.user))>0:
-        details=Neighbourhood.get_specific_hood(neighbour_id)
-        exists=Join_hood.objects.all().get(user=request.user)
+    user=request.user
+    details=NeighbourHood.objects.get(id=neighbour_id)
+    business=Business.get_business_by_estate(neighbour_id)
+    posts=Post.get_post_by_estate(neighbour_id)
+
+    if request.method == 'POST':
+        form = BusinessForm(request.POST, request.FILES)
+        if form.is_valid:
+            name = form.data.get('name')
+            email = form.data.get('email')
+            description = form.data.get('description')
+            post = form.save(commit=False)
+            post.user = user
+            post.neighbourhood = details
+            post.save()
+            return redirect('index')
+
     else:
-        details=Neighbourhood.get_specific_hood(neighbour_id)
-        exists=0
-    return render(request,'singlehood.html',{"exists":exists,"details":details})
+        form = BusinessForm()
+
+    return render(request,'singlehood.html',{"details":details, "business":business, "posts":posts, 'form':form})
 
 def create_business(request):
     '''
     View function to post a message
     '''
-    current_user = request.user
+    user = request.user
 
     if request.method == 'POST':
         form = BusinessForm(request.POST, request.FILES)
         if form.is_valid:
             post = form.save(commit=False)
-            post.user = current_user
+            post.user = user
             post.neighbourhood = user.profile.neighbourhood
             post.save()
             return redirect(index)
@@ -110,7 +124,7 @@ def create_business(request):
         form = BusinessForm()
     return render(request, 'new-business.html', {"form":form})
 
-@login_required(login_url='/accounts/login')
+@login_required()
 def business_details(request, business_id):
     '''
     View function to view details of a hood
@@ -119,15 +133,15 @@ def business_details(request, business_id):
 
     return render(request, 'business-details.html',{"details":details})
 
-@login_required(login_url='/accounts/login/')
+@login_required()
 def new_post(request):
-    current_user = request.user
+    user = request.user
     posts =Profile.objects.get(user = request.user.id)
     if request.method =='POST':
         form = PostForm(request.POST,request.FILES)
         if form.is_valid():
             project = form.save(commit=False)
-            project.user = current_user
+            project.user = user
             project.user_profile = posts
             project.save()
         return redirect('index')

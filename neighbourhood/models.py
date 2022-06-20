@@ -57,7 +57,7 @@ class Business(models.Model):
     email = models.EmailField(max_length=254)
     description = models.TextField(blank=True)
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='business')
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='owner')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
 
     def __str__(self):
         return f'{self.name} Business'
@@ -94,10 +94,15 @@ class Post(models.Model):
     post = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post')
-    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='neighbourhood')
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='post')
 
     def __str__(self):
         return str(self.id)
+
+    @classmethod
+    def get_post_by_estate(cls,neighbourhood_id):
+        messages = cls.objects.all().filter(neighbourhood=neighbourhood_id)
+        return messages
 
 
 class Join_hood(models.Model):
