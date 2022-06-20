@@ -56,7 +56,7 @@ def single_hood(request, hood_id):
             b_form.neighbourhood = hood
             b_form.user = request.user.profile
             b_form.save()
-            return redirect('single-hood', hood.id)
+            return redirect('single_hood', hood.id)
     else:
         form = BusinessForm()
     params = {
@@ -80,10 +80,10 @@ def create_post(request, hood_id):
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.hood = hood
+            post.neighbourhood = hood
             post.user = request.user.profile
             post.save()
-            return redirect('singlehood', hood.id)
+            return redirect('single_hood', hood.id)
     else:
         form = PostForm()
     return render(request, 'post.html', {'form': form})
