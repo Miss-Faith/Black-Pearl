@@ -8,17 +8,17 @@
     <div class="row">
         <h2 class="text-center" style="font-size: 30px;">All Neighbourhoods</h2>
         {% for hood in hoods %}
-        <div class="col-4">
+        <div class="col-lg-4 col-md-6 col-sm-10">
             <br>
             <div class="card">
-                <img src="{% static '/images/mcgill.jpg'%}" class="card-img-top d-flex" alt="{{hood.name}}" style="max-height:240px; width: 200px; margin-left: 20%;">
-                <div class="card-body">
+                <img src="{% static '/images/mcgill.jpg'%}" class="card-img-top d-flex" alt="{{hood.name}}" style="max-height:240px; max-width: 300px; margin: auto;">
+                <div class="card-body text-center">
                     <h5 class="card-title">Neighbourhood: {{hood.name}}</h5>
                     <p class="card-text">Location: {{hood.location}} </p>
-                    {% if request.user.profile.neighbourhood == neighbourhood %}
+                    {% if request.user.profile.neighbourhood %}
                     <br>
                     {% else %}
-                    <div class="card-footer">
+                    <div class="card-footer text-center">
                         <a class="btn btn-outline-info" href="{% url 'pickHood' hood.id %}">Select Hood</a>
                     </div>
                     {% endif %}

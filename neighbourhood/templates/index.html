@@ -1,41 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="jumbotron" style="width: 90%;">
-  <h1 style="text-align: center;color:rgb(77, 67, 67)">Neighbourhoods</h1>
-  <br><p  style="text-align: center ; font-size: 28px;color:rgb(77, 67, 67)">Welcome to our Neighboorhood web application feel free to join your neighbourhood.</p>
-  <a href="{% url allHoods%}">
-    <button type="button" name="button" class="btn btn-secondary btn-lg">Neighbourhoods</button>
-  </a>
-</div>
 
-<div class="container">
-  <br><br>
-  <div class="row mx-auto">
-    <h3 style="text-align:center;font-size: 28px">Posts</h3>
-    <hr>
-    {% if posts %} 
-    <div class="col-10" style="margin-left: 8%;">
-      {% for post in posts %}
-      <div class="card" style="margin-bottom: 1.6rem;">
-        <div class="card-header text-center">
-          <h5>{{post.title}}</h5>
+{% if request.user.profile.neighbourhood%}
+  <div class="container">
+    <br><br>
+    <div class="row mx-auto">
+      <h3 style="text-align:center;font-size: 28px">Posts</h3>
+      <hr>
+      {% if posts %} 
+      <div class="col-10" style="margin-left: 8%;">
+        {% for post in posts %}
+        <div class="card" style="margin-bottom: 1.6rem;">
+          <div class="card-header text-center">
+            <h5>{{post.title}}</h5>
+          </div>
+          <div class="card-body text-center">
+            <p>{{post.post}}</p>
+          </div>
+          <div class="card-footer">
+            <p style="float: left;">{{post.user}}</p>
+            <small style="float: right;">{{post.date}}</small>
+          </div>
         </div>
-        <div class="card-body text-center">
-          <p>{{post.post}}</p>
-        </div>
-        <div class="card-footer">
-          <p style="float: left;">{{post.user}}</p>
-          <small style="float: right;">{{post.date}}</small>
-        </div>
+    
+        {% endfor %}
+        {% else %}
+          <p style="text-align:center">No activity Yet</p>
       </div>
-  
-      {% endfor %}
-      {% else %}
-        <p style="text-align:center">No activity Yet</p>
+      {% endif %}
     </div>
-    {% endif %}
   </div>
-</div>
-
+{% else %}
+<br><br>
+  <div class="d-flex justify-content-center">
+    <div class="jumbotron text-center" style="width: 90%;">
+      <h1 style="text-align: center;color:rgb(77, 67, 67)">Neighbourhoods</h1>
+      <br>
+      <p style="text-align: center ; font-size: 28px;color:rgb(77, 67, 67)">Welcome to the Neighbourhood. <br> Join to get the updates on your neighborhood.</p>
+      <br>
+      <a href="{% url 'allHoods' %}">
+        <button type="button" name="button" class="btn btn-secondary btn-lg">Neighbourhoods</button>
+      </a>
+    </div>
+  </div>
+{% endif %}
 {% endblock %}
