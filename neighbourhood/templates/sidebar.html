@@ -27,7 +27,7 @@
 
       {% if user.profile.neighbourhood %}
       <li class="mb-4">
-          <a href="{% url 'single-hood' user.profile.neighbourhood.id %}">
+          <a href="{% url 'single_hood' user.profile.neighbourhood.id %}">
               <i class="fas fa-paper-plane"></i>&nbsp;
               &nbsp;{{user.profile.neighbourhood.name}}
           </a>
@@ -40,8 +40,8 @@
       </li>
       {% endif %}
   </ul>
-  <div class="logout ml-2 mr-2 ">
-      <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-danger d-block mx-auto"> Logout</a>
+  <div class="ml-2 mr-2 ">
+      <a href="" class="btn btn-sm btn-outline-danger d-block mx-auto"> Logout</a>
   </div>
 
   {% endif%}

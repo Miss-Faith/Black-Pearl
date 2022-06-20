@@ -15,7 +15,7 @@
               <h5 class="card-title tt">{{ hood.name }} ({{hood.location}})
               </h5>
               <h6 class="card-text">
-                  <span><strong>{{hood.members.count}}</strong> Member{{hood.members.count|pluralize}}</span>
+                  <span><strong>{{hood.accounts.count}}</strong> Account{{hood.accounts.count|pluralize}}</span>
                   | <strong>{{ hood.business.count }}</strong> Businesses | <strong>
                   {{ hood.hood_post.count }}</strong> Post{{ hood.hood_post.count|pluralize }}
               </h6>
@@ -37,7 +37,7 @@
         <a href="" class="btn btn-sm btn-outline-info mb-4 mr-4" data-toggle="modal" data-target="#ModalCenter">Add Business</a>
         <a class="btn btn-sm btn-outline-info mb-4" href="{% url 'post' hood.id %}">New Post</a>
         {% if hood.admin == user.profile %}
-        <a href="{% url 'members' hood.id %}" class="btn btn-sm btn-outline-info mb-4 ml-4">Members</a>
+        <a href="{% url 'accounts' hood.id %}" class="btn btn-sm btn-outline-info mb-4 ml-4">Accounts</a>
         {% endif %}
         <form class="form-inline" method="get" action="{% url 'search' %}">
           {% csrf_token %}
@@ -70,7 +70,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{post.title}}</h5>
                 <p class="card-text">{{post.post}}</p>
-                <p class="card-text">By: <small class="text-white">
+                <p class="card-text">By: <small>
                   {{ post.user.user.username|title }}</small> <small style="float:right">{{post.date|date}}</small>
                 </p>
               </div>

@@ -12,9 +12,9 @@
                     <h5 class="card-title">{{ neighbourhood.name }}  ({{hood.location}}) <span class="ml-4">{{neighbourhood.accounts.count}} account{{hood.accounts.count|pluralize}}</span></h5>
                     <p class="card-text">{{hood.description}}</p>
                     {% if request.user.profile.neighbourhood == neighbourhood %}
-                    <a href="{% url 'leave-hood' neighbourhood.id %}" class="btn btn-outline-danger btn-sm">Leave neighbourhood</a>
+                    
                     {% elif not request.user.profile.neighbourhood %}
-                    <a href="{% url 'join-hood' neighbourhood.id %}" class="btn btn-primary btn-sm">Join neighbourhood</a>
+                    <a href="{% url 'join_hood' neighbourhood.id %}" class="btn btn-primary btn-sm">Join neighbourhood</a>
                     {% endif %}
                 </div>
             </div>
