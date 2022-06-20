@@ -1,20 +1,21 @@
-from django.urls import path
+from django.urls import path,include
 from .views import *
 from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
-    path('',auth_views.LoginView.as_view(template_name='index.html'),name = 'index'),
     path('signup/', signup, name='signup'),
-    path('neighbourhoods/', hoods, name='hood'),
-    path('register/', signup, name='signup'),
-    path('new-hood/', create_hood, name='new-hood'),
-    path('profile/<username>', profile, name='profile'),
-    path('profile/<username>/edit/', edit_profile, name='edit-profile'),
-    path('join_hood/<id>', join_hood, name='join-hood'),
-    path('leave_hood/<id>', leave_hood, name='leave_hood'),
-    path('hood/', single_hood, name='single_hood'),
-    path('<hood_id>/new-post', create_post, name='post'),
-    path('<hood_id>/accounts', hood_accounts, name='accounts'),
+    path('',index,name='index'),
+    path('account/', include('django.contrib.auth.urls')),
+    path('profile/',profile,name = 'profile'),
+    path('updateProfile',updateProfile,name = 'updateProfile'),
+    path('new/hood/',create_neighbourhood, name='newHood'),
+    path('all/hoods/',neighbourhoods, name='allHoods'),
+    path('neighborhood/',neighbourhood_details, name='pickHood'),
+    path('follow/', follow, name='follow'),
+    path('unfollow/', unfollow, name='unfollow'),
+    path('new/business/',create_business, name='newBusiness'),
+    path('business/',business_details, name='business'),
+    path('post/', new_post, name='post'),
     path('search/', search_business, name='search'),
 ]

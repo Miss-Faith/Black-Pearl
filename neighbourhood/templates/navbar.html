@@ -1,38 +1,80 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navMain">
-  <div class="container navigation header_right wow fadeInLeft animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
+  <div class="container navigation wow fadeInLeft animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
-        <li style="width: 100px;" class="nav-item active"><a class="nav-link" href="{% url 'single_hood' neighbourhood.id%}"> Home </a></li>
-        <li style="width: 100px;" class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#about">About</a></li>
-        <li style="width: 100px;" class="nav-item"><a class="nav-link" href="{% url 'single_hood'%}">Hoods</a></li>
-        <li style="width: 100px;" class="nav-item"><a class="nav-link open-nav" style="cursor:pointer">Businesses</a></li>
+        <li style="width: 200px;" class="nav-item">
+            <a class="nav-link " href="{% url 'index' %}">
+                <h3 style="font-family: 'Kalam', cursive;">Neighbourhood</h3>
+            </a>
+        </li>
+        <li style="width: 100px;" class="nav-item">
+            <a class="nav-link" data-toggle="modal" data-target="#about">
+                <h3 style="font-family: 'Kalam', cursive;">About</h3>
+            </a>
+        </li>
+        <li style="width: 100px;" class="nav-item">
+            <a class="nav-link " href="{% url 'index' %}">
+                <h3 style="font-family: 'Kalam', cursive;">ggg</h3>
+            </a>
+        </li>
+        <li style="width: 100px;" class="nav-item">
+            <a class="nav-link " href="{% url 'index' %}">
+                <h3 style="font-family: 'Kalam', cursive;">hhh</h3>
+            </a>
+        </li>
       </ul>
     </div>
   </div>
-</nav>
 
-<div id="sideNav" class="nav-side">
-  <a href="javascript:void(0)" class="close-nav">&times;</a>
-  <a href="#" data-toggle="modal" data-target="#about">About</a>
-  <a>businesses:</a>
-  {% for business in businesses %}
-  <a href="/business/{{business.id}}">{{business.name}}</a>
-  {% empty %}
-  <a href="#">There are no businesses</a>
-  {% endfor %}
-  <hr>
-  <div class="footer">
-    <div class="row">
-      <div class="col-md-12">
-        <p>Copyright &copy; 2022 All Rights Reserved</p>
+  <div class="container-fluid px-0 d-flex justify-content-between nav-border text-white-50">
+    <div id="menu-toogle" class="d-flex align-items-center w-25 pl-4">
+      <div class="mb-0 pr-4 f-12 txt-lightgrey">
+        <!-- done the menu with the help of w3schools -->
+        <div id="mySidebar" class="sidebar">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times; Close</a>
+          <a href="{%url 'profile' user.id%}">profile</a>
+          <a href="/all/hoods">All Hoods</a>
+          <a href="/post">Post</a>
+          <a href="#">Move</a>
+          <a href="/new/business/">Businesses</a>
+        </div>
+            
+        <div id="main">
+          <button class="openbtn" onclick="openNav()">&#9776; Menu</button> 
+        </div>
+      </div>
+      <div class="pl-4 h-100 border-left border-dark  d-flex align-items-center">
+        <form class="d-flex justify-items-center"  enctype="multipart/form-data" >
+          {% csrf_token %}
+          <a class="mb-0 d-flex align-items-center" id="search-button">
+            <img id="img-icon" src="{% static 'img/search.png' %}" alt="">
+            <input class="form-control input-height border-0 ml-2 bg-transparent text-white" type="text" placeholder="Search" name="proname"  >
+          </a>
+          <button class="btn btn-sm d-none" type="submit"></button>
+        </form>
       </div>
     </div>
+    <div id="login-submit" class="d-flex align-items-center w-25">
+      {% if user.is_authenticated %}
+      <div class="f-12 font-weight-bold mx-2 px-1  ml-auto text-white-50 d-flex"></a>
+        <a class="nav-link txt-lightgrey" href="{%url 'profile' user.id%}">
+          <span class="" style="text-transform:capitalize;font-size: 15px">Profile</span>
+        </a>
+            
+      </div>
+      <a class="f-12 font-weight-bold mx-2 px-1 ml-auto nav-link txt-lightgrey" href="{url 'logout'}" style="text-transform:capitalize;font-size: 15px">logout</a>
+
+      {% else %}
+      <a href="{% url 'login' %}" class=" txt-lightgrey ">LogIn</a>
+      {% endif %}
+        
+    </div>
   </div>
-</div>
+</nav>
 
     <!-- About Modal -->
     <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
