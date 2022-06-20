@@ -24,9 +24,9 @@ def index(request):
     user =request.user
     hoods=NeighbourHood.objects.all()
     # est=Join_hood.objects.get(user = user)
-    business=Business.get_business_by_neighbourhood(est.neighbourhood)
+    business=Business.get_business_by_estate(user.profile.neighbourhood)
     post=Post.objects.all()
-    return render(request, 'index.html',{"posts":post,"neighbourhoods":est,"user":current_user,"hoods":hoods,"business":business})
+    return render(request, 'index.html',{"posts":post,"neighbourhoods":user.profile.neighbourhood,"user":user,"hoods":hoods,"business":business})
 
 @login_required(login_url='/accounts/login/')
 def profile(request,profile_id):
@@ -76,16 +76,16 @@ def follow(request,neighbour_id):
 
 @login_required(login_url='/accounts/login/')
 def unfollow(request,id):
-    current_user =request.user
+    user =request.user
     neighbourhood=Neighbourhood.object.get(id=id)
-    following=Follow(user=current_user,neighbourhood=neighbourhood).delete()
+    following=Follow(user=user,neighbourhood=neighbourhood).delete()
     return redirect(index)
 
 
 def neighbourhoods(request):
-    current_user=request.user
+    user=request.user
     hoods=Neighbourhood.get_neighbourhoods
-    return render (request,'neighbourhood.html',{"user":current_user,"hoods":hoods})
+    return render (request,'neighbourhood.html',{"user":user,"hoods":hoods})
     
 @login_required(login_url='/accounts/login')
 def create_neighbourhood(request):

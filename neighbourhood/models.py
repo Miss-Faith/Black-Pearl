@@ -85,7 +85,7 @@ class Business(models.Model):
 
     @classmethod
     def get_business_by_estate(cls,neighbourhood_id):
-        messages = cls.objects.all().filter(estate=neighbourhood_id)
+        messages = cls.objects.all().filter(neighbourhood=neighbourhood_id)
         return messages
 
 
