@@ -23,7 +23,6 @@ def signup(request):
 def index(request):
     user =request.user
     hoods=NeighbourHood.objects.all()
-    # est=Join_hood.objects.get(user = user)
     business=Business.get_business_by_estate(user.profile.neighbourhood)
     post=Post.objects.all()
     return render(request, 'index.html',{"posts":post,"neighbourhoods":user.profile.neighbourhood,"user":user,"hoods":hoods,"business":business})
@@ -61,27 +60,6 @@ def updateProfile(request):
 
     return render(request,'update.html',{"form":form})
 
-@login_required(login_url='/accounts/login/')
-def follow(request,neighbour_id):
-    current_user=request.user
-    neighbourhood=Neighbourhood.objects.get(id=neighbour_id)
-    following=Follow(user=current_user,neighbourhood=neighbourhood)
-    check_if_exists=Follow.objects.filter(user=current_user).exists()
-    if check_if_exists==True:
-        Follow.objects.all().filter(user=current_user).delete()
-        Follow.objects.update_or_create(user=current_user,neighbourhood=neighbourhood)
-    else:
-        following.save()
-    return redirect(index)
-
-@login_required(login_url='/accounts/login/')
-def unfollow(request,id):
-    user =request.user
-    neighbourhood=Neighbourhood.object.get(id=id)
-    following=Follow(user=user,neighbourhood=neighbourhood).delete()
-    return redirect(index)
-
-
 def neighbourhoods(request):
     user=request.user
     hoods=Neighbourhood.get_neighbourhoods
@@ -104,9 +82,9 @@ def create_neighbourhood(request):
 
 @login_required(login_url='/accounts/login')
 def neighbourhood_details(request,neighbour_id):
-    if len(Follow.objects.all().filter(user=request.user))>0:
+    if len(Join_hood.objects.all().filter(user=request.user))>0:
         details=Neighbourhood.get_specific_hood(neighbour_id)
-        exists=Follow.objects.all().get(user=request.user)
+        exists=Join_hood.objects.all().get(user=request.user)
     else:
         details=Neighbourhood.get_specific_hood(neighbour_id)
         exists=0
@@ -117,14 +95,13 @@ def create_business(request):
     View function to post a message
     '''
     current_user = request.user
-    est = Follow.objects.get(user = request.user.id)
 
     if request.method == 'POST':
         form = BusinessForm(request.POST, request.FILES)
         if form.is_valid:
             post = form.save(commit=False)
             post.user = current_user
-            post.neighbourhood = est.neighbourhood
+            post.neighbourhood = user.profile.neighbourhood
             post.save()
             return redirect(index)
 
