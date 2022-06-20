@@ -133,7 +133,7 @@ def new_post(request):
     current_user = request.user
     posts =Profile.objects.get(user = request.user.id)
     if request.method =='POST':
-        form = PostMessageForm(request.POST,request.FILES)
+        form = PostForm(request.POST,request.FILES)
         if form.is_valid():
             project = form.save(commit=False)
             project.user = current_user
@@ -142,7 +142,7 @@ def new_post(request):
         return redirect('index')
 
     else:
-        form = PostMessageForm()
+        form = PostForm()
 
     return render(request,'new-project.html',{"form":form})
 

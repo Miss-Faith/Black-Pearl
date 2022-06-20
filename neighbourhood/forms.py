@@ -50,13 +50,13 @@ class SignupForm(forms.ModelForm):
       self._errors['password'] = self.error_class(['Passwords do not match. Try again'])
     return self.cleaned_data
 
-class UpdateProfileForm(forms.ModelForm):
+class UpdateProfile(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ('user',)
 
 
-class NeighbourHoodForm(forms.ModelForm):
+class NeighborhoodForm(forms.ModelForm):
     class Meta:
         model = NeighbourHood
         exclude = ('admin',)
