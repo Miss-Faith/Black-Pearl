@@ -1,29 +1,71 @@
-<nav class="navbar navbar-expand-lg navbar-dark">
-  <div class="container-fluid">
-      <button type="button" id="sidebarCollapse" class="btn btn-sm btn-info">
-          <i class="fas fa-align-left"></i>
-      </button>
-      <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fas fa-align-justify"></i>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="nav navbar-nav ml-auto">
-              {% if user.is_authenticated %}
-              <li class="nav-item active">
-                   <img class="rounded-circle nav-img"src="{{ user.profile.profile_picture.url }}" alt="">
-                  &nbsp; <span class="text-white">{{user.username|title}}</span>
-              </li>
-              {% else %}
-              <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'index' %}">Log In</a>
-              </li>
-
-              <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
-              </li>
-              {% endif %}
-          </ul>
-      </div>
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navMain">
+  <div class="container navigation header_right wow fadeInLeft animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li style="width: 100px;" class="nav-item active"><a class="nav-link" href="{% url 'single_hood' neighbourhood.id%}"> Home </a></li>
+        <li style="width: 100px;" class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#about">About</a></li>
+        <li style="width: 100px;" class="nav-item"><a class="nav-link" href="{% url 'single_hood'%}">Hoods</a></li>
+        <li style="width: 100px;" class="nav-item"><a class="nav-link open-nav" style="cursor:pointer">Businesses</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
+
+<div id="sideNav" class="nav-side">
+  <a href="javascript:void(0)" class="close-nav">&times;</a>
+  <a href="#" data-toggle="modal" data-target="#about">About</a>
+  <a>businesses:</a>
+  {% for business in businesses %}
+  <a href="/business/{{business.id}}">{{business.name}}</a>
+  {% empty %}
+  <a href="#">There are no businesses</a>
+  {% endfor %}
+  <hr>
+  <div class="footer">
+    <div class="row">
+      <div class="col-md-12">
+        <p>Copyright &copy; 2022 All Rights Reserved</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- About Modal -->
+    <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="{% static '/images/ricardo-gomez-angel-GsZLXA4JPcM-unsplash.jpg' %}" class="" style="width:30px">
+                    <h2 class="modal-title text-center">Black Pearl</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container row text-center">
+                        <p>
+                            Black Pearl allows you to view your neighbourhoods
+                            <br>
+                        <p>
+                            Stay updated with the latest updates about your neighbourhood. <br>
+                            Search for businesses in your neighbourhood. <br>
+                            Get emergency hotlines
+                        </p>
+                        </p>
+                        <div>
+                            <img src="{% static 'images/spalsh.jpg' %}" alt="" class = "splash">
+                        </div>
+                        <hr>
+                        <blockquote class="text-muted abt">
+                            ~To live as one
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of about modal -->

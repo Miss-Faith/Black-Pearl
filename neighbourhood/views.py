@@ -7,8 +7,18 @@ from django.template import loader
 
 # Create your views here.
 def index(request):
+    user = request.user
+    all_hoods = NeighbourHood.objects.all()
+    businesses = Business.objects.all()
+    neighbourhood = NeighbourHood.objects.filter(user=user)
+
+    context = {
+        'all_hoods': all_hoods,
+        'businesses':businesses,
+        'neighbourhood':neighbourhood,
+    }
   
-    return render(request, 'index.html')
+    return render(request, 'index.html', context)
 
 def signup(request):
     if request.method == 'POST':
@@ -61,7 +71,7 @@ def single_hood(request, hood_id):
         form = BusinessForm()
     params = {
         'hood': hood,
-        'business': business,
+        'businesses': businesses,
         'form': form,
         'posts': posts
     }
@@ -83,7 +93,7 @@ def create_post(request, hood_id):
             post.neighbourhood = hood
             post.user = request.user.profile
             post.save()
-            return redirect('single_hood', hood.id)
+            return redirect('single_hood', neighbourhood.id)
     else:
         form = PostForm()
     return render(request, 'post.html', {'form': form})
