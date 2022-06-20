@@ -1,33 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron" style="width: 90%;">
+  <h1 style="text-align: center;color:rgb(77, 67, 67)">Neighbourhoods</h1>
+  <br><p  style="text-align: center ; font-size: 28px;color:rgb(77, 67, 67)">Welcome to our Neighboorhood web application feel free to join your neighbourhood.</p>
+  <a href="{% url allHoods%}">
+    <button type="button" name="button" class="btn btn-secondary btn-lg">Neighbourhoods</button>
+  </a>
+</div>
+
 <div class="container">
   <br><br>
-  <section class="col-md-8 col-sm-12">
-      <h3 style="text-align:center;font-size: 28px">Posts</h3>
-      <hr>
-      {%if posts %} 
+  <div class="row mx-auto">
+    <h3 style="text-align:center;font-size: 28px">Posts</h3>
+    <hr>
+    {% if posts %} 
+    <div class="col-10" style="margin-left: 8%;">
       {% for post in posts %}
-      <p>
-          <span style="color:rgb(5, 5, 54)"> {{post.user}}</span> {{post.message}}
-          
-      </p>
+      <div class="card" style="margin-bottom: 1.6rem;">
+        <div class="card-header text-center">
+          <h5>{{post.title}}</h5>
+        </div>
+        <div class="card-body text-center">
+          <p>{{post.post}}</p>
+        </div>
+        <div class="card-footer">
+          <p style="float: left;">{{post.user}}</p>
+          <small style="float: right;">{{post.date}}</small>
+        </div>
+      </div>
+  
       {% endfor %}
-       {% else %}
-      <p style="text-align:center">No activity Yet</p>
-      {% endif %}
-  </section>
-
-
-  <section class="col-md-4 col-sm-12">
-      <h4 style="text-align:center;font-size: 28px"> Businesses in {{estates.estate}}</h4>
-      {% if business %} 
-      {% for biz in business %}
-  <div class="container-1">>
-      <a href="{% url 'business' biz.id %}">
-          <p>{{biz.project}}</p>
-      </a>
+      {% else %}
+        <p style="text-align:center">No activity Yet</p>
+    </div>
+    {% endif %}
   </div>
-      {% endfor %} {% else %}
-      <p>No Business Posted Yet</p>
-      {% endif%}
-  </section>
-
 </div>
+
+{% endblock %}

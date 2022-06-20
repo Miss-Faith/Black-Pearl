@@ -1,20 +1,26 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
+
 {% block content %}
 <div class="container">
-        <a href="{% url 'new-hood' %}" class="btn btn-sm btn-info mb-2"> New Neighbourhood</a>
+    <br>
     <div class="row">
-        {% for hood in all_hoods %}
-        <div class="col-md-4">
-            <div class="card mb-4" style="min-height:340px">
-                <img src="" class="card-img-top" alt="{{ neighbourhood.name }}">
+        <h2 class="text-center" style="font-size: 30px;">All Neighbourhoods</h2>
+        {% for hood in hoods %}
+        <div class="col-4">
+            <br>
+            <div class="card">
+                <img src="{% static '/images/mcgill.jpg'%}" class="card-img-top d-flex" alt="{{hood.name}}" style="max-height:240px; width: 200px; margin-left: 20%;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ neighbourhood.name }}  ({{hood.location}}) <span class="ml-4">{{neighbourhood.accounts.count}} account{{hood.accounts.count|pluralize}}</span></h5>
-                    <p class="card-text">{{hood.description}}</p>
+                    <h5 class="card-title">Neighbourhood: {{hood.name}}</h5>
+                    <p class="card-text">Location: {{hood.location}} </p>
                     {% if request.user.profile.neighbourhood == neighbourhood %}
-                    
-                    {% elif not request.user.profile.neighbourhood %}
-                    <a href="{% url 'join_hood' neighbourhood.id %}" class="btn btn-primary btn-sm">Join neighbourhood</a>
+                    <br>
+                    {% else %}
+                    <div class="card-footer">
+                        <a class="btn btn-outline-info" href="{% url 'pickHood' hood.id %}">Select Hood</a>
+                    </div>
                     {% endif %}
                 </div>
             </div>

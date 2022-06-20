@@ -63,7 +63,7 @@ def updateProfile(request):
 
 def neighbourhoods(request):
     user=request.user
-    hoods=Neighbourhood.get_neighbourhoods
+    hoods=NeighbourHood.objects.all()
     return render (request,'neighbourhood.html',{"user":user,"hoods":hoods})
     
 @login_required(login_url='/accounts/login')
@@ -89,7 +89,7 @@ def neighbourhood_details(request,neighbour_id):
     else:
         details=Neighbourhood.get_specific_hood(neighbour_id)
         exists=0
-    return render(request,'neigh_details.html',{"exists":exists,"details":details})
+    return render(request,'singlehood.html',{"exists":exists,"details":details})
 
 def create_business(request):
     '''

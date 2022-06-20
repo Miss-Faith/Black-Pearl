@@ -11,9 +11,9 @@ urlpatterns = [
     path('updateProfile',updateProfile,name = 'updateProfile'),
     path('new/hood/',create_neighbourhood, name='newHood'),
     path('all/hoods/',neighbourhoods, name='allHoods'),
-    path('neighborhood/',neighbourhood_details, name='pickHood'),
+    path('neighborhood/<neighbour_id>',neighbourhood_details, name='pickHood'),
     path('new/business/',create_business, name='newBusiness'),
-    path('business/',business_details, name='business'),
+    path('business/<business_id>',business_details, name='business'),
     path('post/', new_post, name='post'),
     path('search/', search_results, name='search'),
 ]
