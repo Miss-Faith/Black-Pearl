@@ -59,7 +59,7 @@ def updateProfile(request):
         else:
             form=UpdateProfile()
 
-    return render(request,'update.html',{"form":form})
+    return render(request,'editprofile.html',{"form":form})
 
 def neighbourhoods(request):
     user=request.user
