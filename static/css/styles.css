@@ -63,7 +63,20 @@
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+
 @media screen and (max-height: 450px) {
   .sidebar {padding-top: 15px;}
   .sidebar a {font-size: 18px;}
 }
+
+.backdrop {
+  height: 100vh;
+  background-image:url('/static/images/mcgill.jpg');
+}
+
+.jumbo {
+  background-color: rgba(1,1,1,0.92);
+  color: chocolate;
+  height: 100vh;
+}
+
