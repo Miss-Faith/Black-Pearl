@@ -54,6 +54,12 @@ class UpdateProfile(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ('user',)
+    
+
+class UpdateNeighbourhood(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('neighbourhood',)
 
 
 class NeighborhoodForm(forms.ModelForm):

@@ -19,8 +19,8 @@
                     <br>
                     {% else %}
                     <div class="card-footer text-center">
-                        <a class="btn btn-outline-info" href="{% url 'pickHood' hood.id %}">Select Hood</a>
-                    </div>
+                        <a class="btn btn-outline-info" data-toggle="modal" data-target="#ModalCenter" >Select Hood</a>
+                      </div>
                     {% endif %}
                 </div>
             </div>
@@ -28,4 +28,28 @@
         {% endfor %}
     </div>
 </div>
+
+<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">New Business</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post">
+            {% csrf_token%}
+            {{form|crispy}}
+            
+            <button type="submit" class="btn btn-sm btn-success"></button>
+            <button type="button" class="btn btn-sm btn-outline-danger " data-dismiss="modal">
+                Close
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

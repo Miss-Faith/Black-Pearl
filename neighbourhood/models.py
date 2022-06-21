@@ -11,22 +11,22 @@ from phonenumber_field.modelfields import PhoneNumberField
 class NeighbourHood(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=60)
-    accounts=models.PositiveIntegerField(default=0)
-    admin = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name='hood')
+    occupants=models.PositiveIntegerField(default=0)
+    admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='neighbourhood')
     health = PhoneNumberField(null = False, blank = False)
     police = PhoneNumberField(null = False, blank = False)
     
     def __str__(self):
         return f'{self.name} neighbourhood'
 
-    def create_neighborhood(self):
+    def create_neighbourhood(self):
         self.save()
 
-    def delete_neighborhood(self):
+    def delete_neighbourhood(self):
         self.delete()
 
     @classmethod
-    def find_neighborhood(cls, id):
+    def find_neighbourhood(cls, id):
         return cls.objects.filter(id=id)
 
     @classmethod
@@ -37,7 +37,10 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     first_name = models.CharField(max_length=80, blank=True)
     last_name = models.CharField(max_length=80, blank=True)
-    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.SET_NULL, null=True, related_name='occupants', blank=True)
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, null=True, related_name='profile', blank=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.user.username} profile'

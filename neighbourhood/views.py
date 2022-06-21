@@ -24,8 +24,8 @@ def index(request):
     user =request.user
     hoods=NeighbourHood.objects.all()
     business=Business.get_business_by_estate(user.profile.neighbourhood)
-    post=Post.objects.all()
-    return render(request, 'index.html',{"posts":post,"neighbourhoods":user.profile.neighbourhood,"user":user,"hoods":hoods,"business":business})
+    posts=Post.objects.filter(neighbourhood = user.profile.neighbourhood)
+    return render(request, 'index.html',{"posts":posts,"neighbourhoods":user.profile.neighbourhood,"user":user,"hoods":hoods,"business":business})
 
 @login_required(login_url='/accounts/login/')
 def profile(request, profile_id):
@@ -64,7 +64,18 @@ def updateProfile(request):
 def neighbourhoods(request):
     user=request.user
     hoods=NeighbourHood.objects.all()
-    return render (request,'neighbourhood.html',{"user":user,"hoods":hoods})
+
+    if request.method == 'POST':
+        form = UpdateNeighbourhood(request.POST,request.FILES,instance=Profile.objects.get(user_id = user))
+        if form.is_valid:
+            profile = form.save(commit=False)
+            profile.user = user
+            profile.save()
+            return redirect('index')
+    else:
+        form = UpdateNeighbourhood()
+
+    return render (request,'neighbourhood.html',{"user":user,"hoods":hoods,"form":form})
     
 @login_required()
 def create_neighbourhood(request):
@@ -74,7 +85,7 @@ def create_neighbourhood(request):
         if form.is_valid:
             neighbour=form.save(commit=False)
             neighbour.user=user
-            neigghbour.save()
+            neighbour.save()
             return redirect(index)
 
         else:
@@ -85,6 +96,7 @@ def create_neighbourhood(request):
 def neighbourhood_details(request,neighbour_id):
     user=request.user
     details=NeighbourHood.objects.get(id=neighbour_id)
+    user.profile.neighbourhood = details
     business=Business.get_business_by_estate(neighbour_id)
     posts=Post.get_post_by_estate(neighbour_id)
 
@@ -96,7 +108,6 @@ def neighbourhood_details(request,neighbour_id):
             description = form.data.get('description')
             post = form.save(commit=False)
             post.user = user
-            post.neighbourhood = details
             post.save()
             return redirect('index')
 

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{{user.profile.neighbourhood.name}}
 {% if request.user.profile.neighbourhood%}
   <div class="container">
     <br><br>
