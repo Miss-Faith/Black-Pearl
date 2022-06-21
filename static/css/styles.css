@@ -32,11 +32,8 @@
 /* Position and style the close button (top right corner) */
 .sidebar .closebtn {
  
-  position: absolute;
-  top: 0;
-  right: 25px;
   font-size: 36px;
-  margin-left: 50px;
+
 }
 
 /* The button used to open the sidebar */
@@ -45,13 +42,12 @@
   font-size: 20px;
   cursor: pointer;
   background-color: #111;
-  color: white;
+  color: grey;
   /* padding: 10px 10px; */
   border: none;
 }
 
 .openbtn:hover {
- 
   background-color: #444;
 }
 
@@ -78,5 +74,9 @@
   background-color: rgba(1,1,1,0.92);
   color: chocolate;
   height: 100vh;
+}
+
+.navbar1 {
+  height: 20px;
 }
 

@@ -80,6 +80,10 @@ class Business(models.Model):
         business = cls.objects.filter(id=id)
         return business
 
+    @classmethod
+    def search_business(cls, search_term):
+            businesses = cls.objects.filter(name__icontains=search_term)
+            return businesses
 
     @classmethod
     def get_businesses(cls):

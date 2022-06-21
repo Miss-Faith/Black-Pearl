@@ -164,13 +164,12 @@ def new_post(request):
 
 
 def search_results(request):
-    if 'photos' in request.GET and request.GET['photos']:
-        search_term = request.GET.get('photos')
-        searched_photo = Images.search_by_title(search_term)
-        photos = Images.objects.filter(name=searched_photo).all()
+    if 'business' in request.GET and request.GET['business']:
+        search_term = request.GET.get('business')
+        searched_business = Business.search_business(search_term)
         message = f"{search_term}"
-        return render(request, 'searched.html', {"message": message, "photos": searched_photo})
+        return render(request, 'results.html', {"message": message, "search_term":search_term, "results": searched_business})
     else:
         message = 'Try Again'
-        return render(request, 'searched.html', {"message": message})
+        return render(request, 'results.html', {"message": message})
     

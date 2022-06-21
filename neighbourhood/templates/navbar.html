@@ -3,67 +3,91 @@
   <div class="container navigation wow fadeInLeft animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
-        <li style="width: 100px;" class="nav-item">
-            <a class="nav-link" data-toggle="modal" data-target="#about">
-                <h3>Black Pearl</h3>
-            </a>
+        <li class="nav-item" style="margin-top: 0.6rem;">
+          <button class="openbtn " onclick="openNav()">&#9776; Details</button> 
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'index' %}">
+            <h3>Black Pearl</h3>
+          </a>
+        </li>
+
       </ul>
     </div>
   </div>
 
-  <div class="container-fluid px-0 d-flex justify-content-between nav-border text-white-50">
+  <div class="container-fluid px-0 d-flex justify-content-between nav-border">
     <div id="menu-toogle" class="d-flex align-items-center w-25 pl-4">
-      <div class="mb-0 pr-4 f-12 txt-lightgrey">
+      <div class="mb-0 pr-4 f-12">
         <!-- done the menu with the help of w3schools -->
-        <div id="mySidebar" class="sidebar">
-            <a style="float:left" href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times; Close</a>
-            <ul>
-                <li class="nav-item">
-                    <a class="nav-link " href="{% url 'index' %}">
-                        Neighbourhood
-                    </a>
-                </li>
-                <li>
+        <div id="mySidebar" class="sidebar bg-transparent">
+          <ul>
+            <span class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
+              <a style="font-size: 20px;" href="javascript:void(0)" class="closebtn nav-link" onclick="closeNav()">&times; Close </a>
+            </span>
 
-                </li>
-            </ul>
-          <a href="{%url 'profile' user.profile.id %}">profile</a>
-          <a href="/all/hoods">All Hoods</a>
-          <a href="/post">Post</a>
-          <a href="#">Change Hood</a>
-          <a href="/new/business/">Businesses</a>
-          <div id="login-submit" class="d-flex align-items-center w-25">
-            {% if user.is_authenticated %}
-            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto text-white-50 d-flex"></a>
-              <a class="nav-link txt-lightgrey" href="{%url 'profile' user.profile.id%}">
-                <span class="" style="text-transform:capitalize;font-size: 15px">Profile</span>
+            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
+              <a class="nav-link" data-toggle="modal" data-target="#about">
+                <span style="font-size: 15px">Black Pearl</span>
+              </a>
+            </li>
+            {% if user.profile.neighbourhood.id %}
+            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
+              <a class="nav-link" href="{% url 'pickHood' user.profile.neighbourhood.id %}">
+                <span style="font-size: 15px">My Hood</span>
               </a>  
             </li>
-            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto text-white-50 d-flex"></a>
-                <a class="nav-link txt-lightgrey" href="{% url 'logout' %}">
-                  <span class="" style="text-transform:capitalize;font-size: 15px">Log Out</span>
-                </a>  
-              </li>
-            <a class="ml-auto nav-link" href="" style="text-transform:capitalize;font-size: 15px">logout</a>
-      
-            {% else %}
-            <a href="{% url 'login' %}" class=" txt-lightgrey ">LogIn</a>
             {% endif %}
+
+            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
+              <a class="nav-link" href="/all/hoods">
+                <span style="font-size: 15px">Neighbourhoods</span>
+              </a>  
+            </li>
+            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
+              <a class="nav-link" href="/all/hoods">
+                <span  style="font-size: 15px">Businesses</span>
+              </a>  
+            </li>
+            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
+              <a class="nav-link" href="/post">
+                <span  style="font-size: 15px">New Post</span>
+              </a>  
+            </li>
+            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
+              <a class="nav-link" href="/post">
+                <span  style="font-size: 15px">New Business</span>
+              </a>  
+            </li>
+    
+          {% if user.is_authenticated %}    
+          <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
+            <a class="nav-link" href="{%url 'profile' user.profile.id%}">
+              <span  style="font-size: 15px">Profile</span>
+            </a>  
+          </li>
+          <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
+              <a class="nav-link" href="{% url 'logout' %}">
+                <span style="font-size: 15px">Log Out</span>
+              </a>  
+          </li>
+          {% else %}
+          <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
+            <a class="nav-link" href="{% url 'login' %}">
+              <span style="font-size: 15px">Log In</span>
+            </a>  
+          </li>
+          {% endif %}
               
-          </div>
-        </div>
-            
-        <div id="main">
-          <button class="openbtn" onclick="openNav()">&#9776; Details</button> 
+          </ul>
         </div>
       </div>
-      <div class="pl-4 h-100 border-left border-dark  d-flex align-items-center">
+      <div class="pl-4 h-100 border-left border-dark d-flex align-items-center">
         <form class="d-flex justify-items-center"  enctype="multipart/form-data" >
           {% csrf_token %}
           <a class="mb-0 d-flex align-items-center" id="search-button">
-            <img id="img-icon" src="{% static 'img/search.png' %}" alt="">
-            <input class="form-control input-height border-0 ml-2 bg-transparent text-white" type="text" placeholder="Search" name="proname"  >
+            <img id="img-icon" src="{% static '/images/ricardo.jpg' %}" alt="" style="height: 20px;">
+            <input class="form-control input border-success ml-2 bg-transparent" type="text" placeholder="Search" name="proname">
           </a>
           <button class="btn btn-sm d-none" type="submit"></button>
         </form>
@@ -77,7 +101,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <img src="{% static '/images/ricardo-gomez-angel-GsZLXA4JPcM-unsplash.jpg' %}" class="" style="width:30px">
+                    <img src="{% static '/images/ricardo.jpg' %}" class="" style="max-width:30px ;max-height: 30px;">
                     <h2 class="modal-title text-center">Black Pearl</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -95,7 +119,7 @@
                         </p>
                         </p>
                         <div>
-                            <img src="{% static 'images/spalsh.jpg' %}" alt="" class = "splash">
+                            <img src="{% static 'images/ricardo.jpg' %}" alt="" style="max-width:100px ;max-height: 100px;">
                         </div>
                         <hr>
                         <blockquote class="text-muted abt">

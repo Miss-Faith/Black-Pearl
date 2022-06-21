@@ -3,9 +3,9 @@
 {% block content %}
 <div class="container" style="margin-top:7%">
     {% if results %}
-    <h5>Found {{results.count}} Business{{results.count|pluralize}}</h5>
-    <div class="row">
-        <div class="col-md-4">
+    <h5 class="text-center">Found {{results.count}} Business</h5>
+    <div class="row mx-auto">
+        <div class="col">
             {% for bus in results %}
                 <div class="card">
                     <div class="card-body">
@@ -20,7 +20,7 @@
             {% endfor %}
         </div>
         {% else %}
-        <h4 >Found 0 Business with the name you searched </h4>
+        <h4 >Found 0 Business with the name {{search_term}} </h4>
 
     </div>
     {% endif %}
