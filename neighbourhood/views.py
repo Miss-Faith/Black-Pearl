@@ -160,7 +160,7 @@ def new_post(request):
     else:
         form = PostForm()
 
-    return render(request,'new-project.html',{"form":form})
+    return render(request,'post.html',{"form":form})
 
 
 def search_results(request):

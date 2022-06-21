@@ -11,7 +11,7 @@
             <p> {{user.email}}</p>
             {% if request.user.profile.neighbourhood %}
             <p class="text-center">Neighbourhood Details
-                <br> <a class="btn btn-sm btn-info" href="">{{ user.profile.neighbourhood.name }}</a>
+                <br> <a class="btn btn-sm btn-success" href="">{{ user.profile.neighbourhood.name }}</a>
             </p>
             {% endif %}
         </div>
@@ -19,7 +19,7 @@
         <div class="col-4">
             {%if user.profile.user.id == user.id%}
             <br><br><br><br><br><br>
-             <a class="btn btn-sm btn-info" href="{% url 'updateProfile' %}"> Update Profile</a>        
+             <a class="btn btn-sm btn-success" href="{% url 'updateProfile' %}"> Update Profile</a>        
             {% endif %}   
         </div>
     </div>

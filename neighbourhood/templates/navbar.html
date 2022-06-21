@@ -1,29 +1,11 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navMain">
   <div class="container navigation wow fadeInLeft animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
-        <li style="width: 200px;" class="nav-item">
-            <a class="nav-link " href="{% url 'index' %}">
-                <h3 style="font-family: 'Kalam', cursive;">Neighbourhood</h3>
-            </a>
-        </li>
         <li style="width: 100px;" class="nav-item">
             <a class="nav-link" data-toggle="modal" data-target="#about">
-                <h3 style="font-family: 'Kalam', cursive;">About</h3>
-            </a>
-        </li>
-        <li style="width: 100px;" class="nav-item">
-            <a class="nav-link " href="{% url 'index' %}">
-                <h3 style="font-family: 'Kalam', cursive;">ggg</h3>
-            </a>
-        </li>
-        <li style="width: 100px;" class="nav-item">
-            <a class="nav-link " href="{% url 'index' %}">
-                <h3 style="font-family: 'Kalam', cursive;">hhh</h3>
+                <h3>Black Pearl</h3>
             </a>
         </li>
       </ul>
@@ -35,16 +17,45 @@
       <div class="mb-0 pr-4 f-12 txt-lightgrey">
         <!-- done the menu with the help of w3schools -->
         <div id="mySidebar" class="sidebar">
-          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times; Close</a>
+            <a style="float:left" href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times; Close</a>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link " href="{% url 'index' %}">
+                        Neighbourhood
+                    </a>
+                </li>
+                <li>
+
+                </li>
+            </ul>
           <a href="{%url 'profile' user.profile.id %}">profile</a>
           <a href="/all/hoods">All Hoods</a>
           <a href="/post">Post</a>
           <a href="#">Change Hood</a>
           <a href="/new/business/">Businesses</a>
+          <div id="login-submit" class="d-flex align-items-center w-25">
+            {% if user.is_authenticated %}
+            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto text-white-50 d-flex"></a>
+              <a class="nav-link txt-lightgrey" href="{%url 'profile' user.profile.id%}">
+                <span class="" style="text-transform:capitalize;font-size: 15px">Profile</span>
+              </a>  
+            </li>
+            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto text-white-50 d-flex"></a>
+                <a class="nav-link txt-lightgrey" href="{% url 'logout' %}">
+                  <span class="" style="text-transform:capitalize;font-size: 15px">Log Out</span>
+                </a>  
+              </li>
+            <a class="ml-auto nav-link" href="" style="text-transform:capitalize;font-size: 15px">logout</a>
+      
+            {% else %}
+            <a href="{% url 'login' %}" class=" txt-lightgrey ">LogIn</a>
+            {% endif %}
+              
+          </div>
         </div>
             
         <div id="main">
-          <button class="openbtn" onclick="openNav()">&#9776; Menu</button> 
+          <button class="openbtn" onclick="openNav()">&#9776; Details</button> 
         </div>
       </div>
       <div class="pl-4 h-100 border-left border-dark  d-flex align-items-center">
@@ -57,21 +68,6 @@
           <button class="btn btn-sm d-none" type="submit"></button>
         </form>
       </div>
-    </div>
-    <div id="login-submit" class="d-flex align-items-center w-25">
-      {% if user.is_authenticated %}
-      <div class="f-12 font-weight-bold mx-2 px-1  ml-auto text-white-50 d-flex"></a>
-        <a class="nav-link txt-lightgrey" href="{%url 'profile' user.profile.id%}">
-          <span class="" style="text-transform:capitalize;font-size: 15px">Profile</span>
-        </a>
-            
-      </div>
-      <a class="ml-auto nav-link" href="{% url 'logout' %}" style="text-transform:capitalize;font-size: 15px">logout</a>
-
-      {% else %}
-      <a href="{% url 'login' %}" class=" txt-lightgrey ">LogIn</a>
-      {% endif %}
-        
     </div>
   </div>
 </nav>
