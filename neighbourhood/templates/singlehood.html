@@ -25,8 +25,6 @@
               <p class="card-text"><span class="text-info">Police Tell</span>
                   &nbsp;<strong>{{details.police}}</strong> |
                   <span class="text-info">Hospital Tell</span> <strong>{{details.health}}</strong></p>
-              <p class="card-text">Administrator: <small class="text-muted">
-                  {{ details.admin.user.username }}</small></p>
             </div>
           </div>
         </div>
@@ -68,23 +66,6 @@
                 <p class="card-text">{{bus.email}}</p>
                 <p class="card-text">{{bus.description}}</p>
                 <p class="card-text">Owner: <small class="text-muted">{{ bus.user |title }}</small></p>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-        <h5 class="text-center">Posts</h5>
-        <hr>
-        <div class="row">
-          {% for post in posts %}
-          <div class="col-10 mx-auto">
-            <div class="card" style="margin-bottom: 1rem;">
-              <div class="card-body">
-                <h5 class="card-title">{{post.title}}</h5>
-                <p class="card-text">{{post.post}}</p>
-                <p class="card-text">By: <small>
-                  {{ post.user.username|title }}</small> <small style="float:right">{{post.date|date}}</small>
-                </p>
               </div>
             </div>
           </div>

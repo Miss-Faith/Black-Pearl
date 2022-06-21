@@ -23,9 +23,21 @@ def signup(request):
 def index(request):
     user =request.user
     hoods=NeighbourHood.objects.all()
-    business=Business.get_business_by_estate(user.profile.neighbourhood)
+    business=Business.objects.filter(neighbourhood=user.profile.neighbourhood)
     posts=Post.objects.filter(neighbourhood = user.profile.neighbourhood)
-    return render(request, 'index.html',{"posts":posts,"neighbourhoods":user.profile.neighbourhood,"user":user,"hoods":hoods,"business":business})
+    details=NeighbourHood.objects.get(id=user.profile.neighbourhood.id)
+    posts=Post.get_post_by_neighbourhood(user.profile.neighbourhood.id)
+
+    context = {
+        "details":details,
+        "business":business,
+        "posts":posts,
+        "neighbourhoods":user.profile.neighbourhood,
+        "user":user,
+        "hoods":hoods,
+    }
+
+    return render(request, 'index.html',context)
 
 @login_required(login_url='/accounts/login/')
 def profile(request, profile_id):
@@ -97,8 +109,8 @@ def neighbourhood_details(request,neighbour_id):
     user=request.user
     details=NeighbourHood.objects.get(id=neighbour_id)
     user.profile.neighbourhood = details
-    business=Business.get_business_by_estate(neighbour_id)
-    posts=Post.get_post_by_estate(neighbour_id)
+    business=Business.objects.filter(neighbourhood=user.profile.neighbourhood)
+    posts=Post.get_post_by_neighbourhood(neighbour_id)
 
     if request.method == 'POST':
         form = BusinessForm(request.POST, request.FILES)
@@ -135,14 +147,6 @@ def create_business(request):
         form = BusinessForm()
     return render(request, 'new-business.html', {"form":form})
 
-@login_required()
-def business_details(request, business_id):
-    '''
-    View function to view details of a hood
-    '''
-    details = Business.get_specific_business(business_id)
-
-    return render(request, 'business-details.html',{"details":details})
 
 @login_required()
 def new_post(request):

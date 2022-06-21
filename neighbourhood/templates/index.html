@@ -1,10 +1,29 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 {% if request.user.profile.neighbourhood%}
   <div class="container">
     <br><br>
-    <div class="row mx-auto">
+    <div class="row mx-auto no-gutters">
+      <div class="col-md-5">
+        <img src="{% static '/images/mcgill.jpg' %}" class="card-img" alt="image" style="max-height: 250px; max-width: 250px;">
+      </div>
+      <div class="col-md-7">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ details.name }} <small>({{details.location}})</small>
+          </h5>
+          <h6 class="card-text">
+              <span><strong>{{details.occupants.count}} </strong> Occupants | </span>
+              <span><strong>{{details.business.count }}</strong> Businesses | </span>
+              <span><strong>{{details.post.count }}</strong> Posts </span>
+          </h6>
+          <p class="card-text"><span class="text-info">Police Tell</span>
+              &nbsp;<strong>{{details.police}}</strong> |
+              <span class="text-info">Hospital Tell</span> <strong>{{details.health}}</strong></p>
+        </div>
+      </div>
       <h3 style="text-align:center;font-size: 28px">Posts</h3>
       <hr>
       {% if posts %} 

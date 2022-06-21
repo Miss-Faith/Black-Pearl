@@ -26,10 +26,6 @@ class NeighbourHood(models.Model):
         self.delete()
 
     @classmethod
-    def find_neighbourhood(cls, id):
-        return cls.objects.filter(id=id)
-
-    @classmethod
     def update_neighbourhood(cls, name, location, occupants):
         update = cls.objects.filter(id = id).update(name = name, location = location, occupants=occupants)
 
@@ -76,25 +72,9 @@ class Business(models.Model):
         update = cls.objects.filter(id = id).update(name = name, location = location, description = description)
 
     @classmethod
-    def get_specific_business(cls,id):
-        business = cls.objects.filter(id=id)
-        return business
-
-    @classmethod
     def search_business(cls, search_term):
             businesses = cls.objects.filter(name__icontains=search_term)
             return businesses
-
-    @classmethod
-    def get_businesses(cls):
-        business = cls.objects.all()
-        return business
-
-    @classmethod
-    def get_business_by_estate(cls,neighbourhood_id):
-        messages = cls.objects.all().filter(neighbourhood=neighbourhood_id)
-        return messages
-
 
 class Post(models.Model):
     title = models.CharField(max_length=120, null=True)
@@ -107,19 +87,6 @@ class Post(models.Model):
         return str(self.id)
 
     @classmethod
-    def get_post_by_estate(cls,neighbourhood_id):
+    def get_post_by_neighbourhood(cls,neighbourhood_id):
         messages = cls.objects.all().filter(neighbourhood=neighbourhood_id)
         return messages
-
-
-class Join_hood(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    estate=models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='estate')
-
-    def __str__(self):
-        return self.user.username
-
-    @classmethod
-    def get_following(cls,user_id):
-        following =  Follow.objects.filter(user=user_id).all()
-        return following

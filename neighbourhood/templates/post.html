@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container">
+    <br>
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8 bg-white poster">
@@ -9,10 +10,10 @@
             <form action="" method="post" novalidate>
                 {% csrf_token %}
                 {{ form|crispy }}
-                <button type="submit" class="btn btn-sm btn-success "> Post</button>
+                <button style="margin-left: 42%;" type="submit" class="btn btn-sm btn-success "> Post</button>
             </form>
+            <br>
         </div>
-        <div class="col-md-2"></div>
     </div>
 
 </div>

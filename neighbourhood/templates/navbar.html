@@ -3,7 +3,7 @@
   <div class="container navigation wow fadeInLeft animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
-        <li class="nav-item" style="margin-top: 0.6rem;">
+        <li class="nav-item" style="margin-top: 0.6rem; ">
           <button class="openbtn " onclick="openNav()">&#9776; Details</button> 
         </li>
         <li class="nav-item">
@@ -27,14 +27,14 @@
             </span>
 
             <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
-              <a class="nav-link" data-toggle="modal" data-target="#about">
-                <span style="font-size: 15px">Black Pearl</span>
+              <a class="nav-link" href="" data-toggle="modal" data-target="#about">
+                <span style="font-size: 15px">About</span>
               </a>
             </li>
             {% if user.profile.neighbourhood.id %}
             <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
               <a class="nav-link" href="{% url 'pickHood' user.profile.neighbourhood.id %}">
-                <span style="font-size: 15px">My Hood</span>
+                <span style="font-size: 15px">Businesses</span>
               </a>  
             </li>
             {% endif %}
@@ -45,18 +45,8 @@
               </a>  
             </li>
             <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
-              <a class="nav-link" href="/all/hoods">
-                <span  style="font-size: 15px">Businesses</span>
-              </a>  
-            </li>
-            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
               <a class="nav-link" href="/post">
                 <span  style="font-size: 15px">New Post</span>
-              </a>  
-            </li>
-            <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
-              <a class="nav-link" href="/post">
-                <span  style="font-size: 15px">New Business</span>
               </a>  
             </li>
     
@@ -81,16 +71,6 @@
               
           </ul>
         </div>
-      </div>
-      <div class="pl-4 h-100 border-left border-dark d-flex align-items-center">
-        <form class="d-flex justify-items-center"  enctype="multipart/form-data" >
-          {% csrf_token %}
-          <a class="mb-0 d-flex align-items-center" id="search-button">
-            <img id="img-icon" src="{% static '/images/ricardo.jpg' %}" alt="" style="height: 20px;">
-            <input class="form-control input border-success ml-2 bg-transparent" type="text" placeholder="Search" name="proname">
-          </a>
-          <button class="btn btn-sm d-none" type="submit"></button>
-        </form>
       </div>
     </div>
   </div>
