@@ -1,43 +1,50 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
 from .models import *
 
 # Create your tests here.
-
-
-class ProfileTestClass(TestCase):
+class TestProfile(TestCase):
     '''
     Test case for the Profile class
     '''
-
     def setUp(self):
         '''
-        Method that creates an instance of Profile class
+        Method that creates an instance of User class
         '''
-        # Create instance of Profile class
-        self.new_profile = Profile(bio="Friendly Neighbour")
+        self.user = User(id=1, username='faith', email='faith@gmail.com', password='pass')
+        self.user.save()
 
     def test_instance(self):
-        '''
-        Test case to check if self.new_profile in an instance of Profile class
-        '''
-        self.assertTrue(isinstance(self.new_profile, Profile))
+        self.assertTrue(isinstance(self.user, User))
+
+    def test_save_user(self):
+        self.user.save()
+
+    def test_delete_user(self):
+        self.user.delete()
 
 
-    def test_get_other_profiles(self):
-        '''
-        Test case to check if all profiles are gotten from the database
-        '''
-        self.name = User(username="Faith")
-        self.name.save()
+class PostTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(id=1, username='faith')
+        self.neighbourhood = NeighbourHood.objects.create(id=1, name='kijiji', location='here', occupants=1, user=self.user, health='0722yy', police='0722gg')
+        self.post = Post.objects.create(id=1, title='test post', post='post post post', date='now', user=self.user, neighbourhood=self.neighbourhood)
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.post, Post))
+
+    def test_save_post(self):
+        self.post.save()
+        post = Post.objects.all()
+        self.assertTrue(len(post) > 0)
+
+    def test_search_post(self):
+        self.post.save()
+        post = Post.get_post_by_neighbourhood(1)
+        self.assertTrue(len(post) > 0)
 
 
-        self.test_profile = Profile(user=self.name, bio="Another Profile")
-        gotten_profiles = Profile.get_other_profiles(self.name.id)
-        profiles = Profile.objects.all()
 
-
-class Neighbourhood(TestCase):
+class TestNeighbourhood(TestCase):
     '''
     Test case for the Neighbourhood class
     '''
@@ -46,29 +53,27 @@ class Neighbourhood(TestCase):
         '''
         Method that creates an instance of Profile class
         '''
-        # Create a Image instance
-        self.name = Neighbourhood(name='kijiji')
+        self.user = User.objects.create(id=1, username='faith')
+        self.neighbourhood = NeighbourHood.objects.create(id=1, name='kijiji', location='here', occupants=1, user=self.user, health='0722yy', police='0722gg')
 
     def test_instance(self):
         '''
-        Test case to check if self.new_Image in an instance of Image class
+        Test case to check if self.neighbourhood in an instance of Neighbourhood class
         '''
-        self.assertTrue(isinstance(self.new_Image, Image))
+        self.assertTrue(isinstance(self.neighbourhood, NeighbourHood))
 
-class Post(TestCase):
-    '''
-    Test case for the Post class
-    '''
+    def test_save_neighbourhood(self):
+        self.neighbourhood.save()
+        neighbourhood = NeighbourHood.objects.all()
+        self.assertTrue(len(neighbourhood) > 0)
 
-    def setUp(self):
-        '''
-        Method that creates an instance of Post class
-        '''
-        # Create a Post instance
-        self.title = Post(title='hey')
+    def test_update_neighbourhood(self):
+        self.neighbourhood.save()
+        self.neighbourhood.update_neighbourhood(self.neighbourhood.name, 'kijiji')
+        updated_name = NeighbourHood.objects.filter(name="town")
+        self.assertFalse(len(updated_name) > 0)
 
-    def test_instance(self):
-        '''
-        Test case to check if self.title in an instance of Post class
-        '''
-        self.assertTrue(isinstance(self.title, Post.title))
+    def test_delete_neighbourhood(self):
+        self.neighbourhood.delete()
+        neighbourhood = NeighbourHood.objects.all()
+        self.assertTrue(len(neighbourhood) == 0)

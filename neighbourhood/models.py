@@ -25,9 +25,10 @@ class NeighbourHood(models.Model):
     def delete_neighbourhood(self):
         self.delete()
 
-    @classmethod
-    def update_neighbourhood(cls, name, location, occupants):
-        update = cls.objects.filter(id = id).update(name = name, location = location, occupants=occupants)
+    def update_neighbourhood(self, name, value):
+        NeighbourHood.objects.filter(name=name).update(name=value)
+
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
