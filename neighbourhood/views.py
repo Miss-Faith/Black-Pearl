@@ -120,14 +120,14 @@ def neighbourhoods(request):
     
 @login_required()
 def create_neighbourhood(request):
-
-    if request.method=='post':
-        form=NeighbourhoodForm(request.POST,request.files)
+    user = request.user
+    if request.method=='POST':
+        form=NeighbourhoodForm(request.POST,request.FILES)
         if form.is_valid:
-            neighbour=form.save(commit=False)
-            neighbour.user=user
-            neighbour.save()
-            return redirect(index)
+            neighbourhood=form.save(commit=False)
+            neighbourhood.user = user
+            neighbourhood.save()
+            return redirect('index')
 
     else:
         form=NeighbourhoodForm()
@@ -147,34 +147,16 @@ def neighbourhood_details(request,neighbour_id):
             name = form.data.get('name')
             email = form.data.get('email')
             description = form.data.get('description')
-            post = form.save(commit=False)
-            post.user = user
-            post.save()
+            business = form.save(commit=False)
+            business.user = user
+            business.neighbourhood = user.profile.neighbourhood
+            business.save()
             return redirect('index')
 
     else:
         form = BusinessForm()
 
     return render(request,'singlehood.html',{"details":details, "business":business, "posts":posts, 'form':form})
-
-def create_business(request):
-    '''
-    View function to post a message
-    '''
-    user = request.user
-
-    if request.method == 'POST':
-        form = BusinessForm(request.POST, request.FILES)
-        if form.is_valid:
-            post = form.save(commit=False)
-            post.user = user
-            post.neighbourhood = user.profile.neighbourhood
-            post.save()
-            return redirect(index)
-
-    else:
-        form = BusinessForm()
-    return render(request, 'new-business.html', {"form":form})
 
 
 @login_required()
@@ -184,10 +166,10 @@ def new_post(request):
     if request.method =='POST':
         form = PostForm(request.POST,request.FILES)
         if form.is_valid():
-            project = form.save(commit=False)
-            project.user = user
-            project.user_profile = posts
-            project.save()
+            post = form.save(commit=False)
+            post.user = user
+            post.neighbourhood = user.profile.neighbourhood
+            post.save()
         return redirect('index')
 
     else:

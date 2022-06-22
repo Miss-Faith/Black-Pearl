@@ -65,7 +65,7 @@ class UpdateNeighbourhood(forms.ModelForm):
 class NeighbourhoodForm(forms.ModelForm):
     class Meta:
         model = NeighbourHood
-        exclude = ('admin',)
+        exclude = ('user','occupants')
 
 
 class BusinessForm(forms.ModelForm):

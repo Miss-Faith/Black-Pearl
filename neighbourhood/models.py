@@ -12,7 +12,7 @@ class NeighbourHood(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=60)
     occupants=models.PositiveIntegerField(default=0)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='neighbourhood')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='neighbourhood', blank=True)
     health = PhoneNumberField(null = False, blank = False)
     police = PhoneNumberField(null = False, blank = False)
     
@@ -80,12 +80,12 @@ class Business(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=120, null=True)
     post = models.TextField()
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True, )
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post')
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='post')
 
     def __str__(self):
-        return str(self.id)
+        return str(self.title)
 
     @classmethod
     def get_post_by_neighbourhood(cls,neighbourhood_id):
