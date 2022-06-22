@@ -6,7 +6,7 @@ A web application that allows neighbourhood members to be in the loop about ever
 To get updates on your neighbourhood, join a neighbourhood
 
 ## Site
-[Black Pearl](https://blackpearl.herokuapp.com/)
+[Black Pearl](https://theblackpearl.herokuapp.com/)
 ### Setup Requirements
 
 ## TM
