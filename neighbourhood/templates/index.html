@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-{% if request.user.profile.neighbourhood%}
+{% if request.user.profile.neighbourhood %}
   <div class="container">
     <br><br>
     <div class="row mx-auto no-gutters">
@@ -52,13 +52,13 @@
 {% else %}
 <br><br>
   <div class="d-flex justify-content-center">
-    <div class="jumbotron text-center" style="width: 90%;">
-      <h1 style="text-align: center;color:rgb(77, 67, 67)">Neighbourhoods</h1>
+    <div class="jumbotron text-center" style="width: 90%; background-color: rgba(196, 189, 173, 0.6);">
+      <h1 style="text-align: center;color:rgb(77, 67, 67)">Black Pearl</h1>
       <br>
       <p style="text-align: center ; font-size: 28px;color:rgb(77, 67, 67)">Welcome to the Neighbourhood. <br> Join to get the updates on your neighborhood.</p>
       <br>
       <a href="{% url 'allHoods' %}">
-        <button type="button" name="button" class="btn btn-secondary btn-lg">Neighbourhoods</button>
+        <button type="button" name="button" class="btn btn-secondary btn-lg">Select Neighbourhood</button>
       </a>
     </div>
   </div>

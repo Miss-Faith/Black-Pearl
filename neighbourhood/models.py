@@ -12,7 +12,7 @@ class NeighbourHood(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=60)
     occupants=models.PositiveIntegerField(default=0)
-    admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='neighbourhood')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='neighbourhood')
     health = PhoneNumberField(null = False, blank = False)
     police = PhoneNumberField(null = False, blank = False)
     

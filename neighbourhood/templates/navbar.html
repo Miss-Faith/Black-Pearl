@@ -44,11 +44,13 @@
                 <span style="font-size: 15px">Neighbourhoods</span>
               </a>  
             </li>
+            {% if user.profile.neighbourhood.id %}
             <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">
               <a class="nav-link" href="/post">
                 <span  style="font-size: 15px">New Post</span>
               </a>  
             </li>
+            {% endif %}
     
           {% if user.is_authenticated %}    
           <li class="f-12 font-weight-bold mx-2 px-1  ml-auto d-flex">

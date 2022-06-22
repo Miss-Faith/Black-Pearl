@@ -23,23 +23,29 @@ def signup(request):
 def index(request):
     user =request.user
     hoods=NeighbourHood.objects.all()
-    business=Business.objects.filter(neighbourhood=user.profile.neighbourhood)
-    posts=Post.objects.filter(neighbourhood = user.profile.neighbourhood)
-    details=NeighbourHood.objects.get(id=user.profile.neighbourhood.id)
-    posts=Post.get_post_by_neighbourhood(user.profile.neighbourhood.id)
 
-    context = {
-        "details":details,
-        "business":business,
-        "posts":posts,
-        "neighbourhoods":user.profile.neighbourhood,
-        "user":user,
-        "hoods":hoods,
-    }
+    if user.profile.neighbourhood :
+        business=Business.objects.filter(neighbourhood=user.profile.neighbourhood)
+        posts=Post.objects.filter(neighbourhood = user.profile.neighbourhood)
+        details=NeighbourHood.objects.get(id=user.profile.neighbourhood.id)
+    
+        context = {
+            "details":details,
+            "business":business,
+            "posts":posts,
+            "neighbourhoods":user.profile.neighbourhood,
+            "user":user,
+            "hoods":hoods,
+        }
+    else:
+        context = {
+            "user":user,
+            "hoods":hoods,
+        }
 
     return render(request, 'index.html',context)
 
-@login_required(login_url='/accounts/login/')
+@login_required()
 def profile(request, profile_id):
     '''
     Method that fetches a users profile page
@@ -50,7 +56,7 @@ def profile(request, profile_id):
     profile = Profile.objects.filter(user = profile_id)
     return render(request,"profile.html",{"profile":profile,"title":title})
 
-@login_required(login_url='/accounts/login/')
+@login_required()
 def updateProfile(request):
 
     user=request.user
@@ -73,9 +79,32 @@ def updateProfile(request):
 
     return render(request,'editprofile.html',{"form":form})
 
+@login_required()
+def updateProfile2(request, user_id):
+
+    if request.method =='POST':
+        if Profile.objects.filter(user_id=user_id).exists():
+            form = UpdateProfile(request.POST,request.FILES,instance=Profile.objects.get(user_id = user_id))
+        else:
+            form=UpdateProfile(request.POST,request.FILES)
+        if form.is_valid():
+          profile=form.save(commit=False)
+          profile.user.id=user_id
+          profile.save()
+        return redirect('allHoods')
+    else:
+
+        if Profile.objects.filter(user_id = user_id).exists():
+           form=UpdateProfile(instance =Profile.objects.get(user_id=user_id))
+        else:
+            form=UpdateProfile()
+
+    return render(request,'editprofile.html',{"form":form})
+
 def neighbourhoods(request):
     user=request.user
     hoods=NeighbourHood.objects.all()
+    users=User.objects.all()
 
     if request.method == 'POST':
         form = UpdateNeighbourhood(request.POST,request.FILES,instance=Profile.objects.get(user_id = user))
@@ -87,7 +116,7 @@ def neighbourhoods(request):
     else:
         form = UpdateNeighbourhood()
 
-    return render (request,'neighbourhood.html',{"user":user,"hoods":hoods,"form":form})
+    return render (request,'neighbourhood.html',{"user":user,"hoods":hoods,"form":form, "users":users})
     
 @login_required()
 def create_neighbourhood(request):
@@ -100,9 +129,9 @@ def create_neighbourhood(request):
             neighbour.save()
             return redirect(index)
 
-        else:
-            form=NeighbourhoodForm()
-        return render(request,'neighform.html',{"form":form})
+    else:
+        form=NeighbourhoodForm()
+    return render(request,'newhood.html',{"form":form})
 
 @login_required()
 def neighbourhood_details(request,neighbour_id):
@@ -176,4 +205,9 @@ def search_results(request):
     else:
         message = 'Try Again'
         return render(request, 'results.html', {"message": message})
+
+def hood_occupants(request, hood_id):
+    occupants = NeighbourHood.objects.get(id=hood_id)
+    # occupants = Profile.objects.filter(neighbourhood=hood)
+    return render(request, 'accounts.html', {'occupants': occupants})
     

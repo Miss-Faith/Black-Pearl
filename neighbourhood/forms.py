@@ -62,7 +62,7 @@ class UpdateNeighbourhood(forms.ModelForm):
         fields = ('neighbourhood',)
 
 
-class NeighborhoodForm(forms.ModelForm):
+class NeighbourhoodForm(forms.ModelForm):
     class Meta:
         model = NeighbourHood
         exclude = ('admin',)
