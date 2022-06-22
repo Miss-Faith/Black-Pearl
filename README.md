@@ -1,7 +1,10 @@
 # [Black Pearl](https://github.com/Miss-Faith/Black-Pearl)
 #### By [Faith Mwangi](https://github.com/miss-faith)
 ### Description
-A web-app that allows a users to upload projects, view other users projects and rate projects.
+A web application that allows neighbourhood members to be in the loop about everything happening in your neighborhood through post updates.
+
+To get updates on your neighbourhood, join a neighbourhood
+
 ## Site
 [Black Pearl](https://blackpearl.herokuapp.com/)
 ### Setup Requirements
